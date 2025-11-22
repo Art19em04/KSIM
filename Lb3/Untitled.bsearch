@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<!DOCTYPE search SYSTEM "behaviorsearch.dtd">
+<search>
+    <bsearchVersionNumber>1,10</bsearchVersionNumber>
+    <modelInfo>
+        <modelFile>D:\Project\KSIM\Lb2\model.nlogox</modelFile>
+        <modelSetupCommands>setup</modelSetupCommands>
+        <modelStepCommands>go</modelStepCommands>
+        <modelStopCondition>ticks &gt;= 5 * day-length</modelStopCondition>
+        <modelStepLimit>18000</modelStepLimit>
+        <modelMetricReporter>abs (15 - temperature)</modelMetricReporter>
+        <modelMeasureIf>(ticks &gt;= 4 * day-length) and (ticks &lt; 5 * day-length) and (is-not-night = 1)</modelMeasureIf>
+    </modelInfo>
+    <fitnessInfo>
+        <fitnessMinimized>true</fitnessMinimized>
+        <fitnessCollecting>MEAN_ACROSS_STEPS</fitnessCollecting>
+        <fitnessSamplingReplications>10</fitnessSamplingReplications>
+        <fitnessCombineReplications>MEAN</fitnessCombineReplications>
+    </fitnessInfo>
+    <searchSpace>
+        <paramSpec>["sun-brightness" [0 0.2 5]]</paramSpec>
+        <paramSpec>["albedo" [0 0.05 1]]</paramSpec>
+        <paramSpec>["initial-clouds" [0 1 100]]</paramSpec>
+        <paramSpec>["night" [0 0.1 0.9]]</paramSpec>
+    </searchSpace>
+    <searchMethod type="StandardGA">
+        <searchMethodParameter name="mutation-rate" value="0.03"/>
+        <searchMethodParameter name="population-size" value="50"/>
+        <searchMethodParameter name="tournament-size" value="3"/>
+        <searchMethodParameter name="population-model" value="generational"/>
+        <searchMethodParameter name="crossover-rate" value="0.7"/>
+    </searchMethod>
+    <chromosomeRepresentation type="GrayBinaryChromosome"/>
+    <caching>true</caching>
+    <evaluationLimit>300</evaluationLimit>
+    <bestCheckingNumReplications>10</bestCheckingNumReplications>
+</search>
